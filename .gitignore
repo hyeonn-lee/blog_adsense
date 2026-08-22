@@ -37,6 +37,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# Figma Make 디자인 원본 (참고용, 실제 앱 빌드 대상 아님)
+/figma_make_design_senior
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

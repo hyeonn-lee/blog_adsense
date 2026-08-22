@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Container } from "@/components/Container";
 import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
@@ -7,51 +8,47 @@ export const metadata: Metadata = {
 };
 
 export default function PrivacyPage() {
+  const sections: { h: string; p: string }[] = [
+    {
+      h: "1. 수집하는 개인정보 항목",
+      p: `${siteConfig.name}은(는) 문의하기 기능을 이용하실 때 이름, 이메일 주소, 문의 내용을 수집합니다. 그 밖에 서비스 이용 과정에서 접속 기록, 쿠키, 방문 기록이 자동으로 생성·수집될 수 있습니다.`,
+    },
+    {
+      h: "2. 쿠키 및 광고 쿠키 고지",
+      p: "본 사이트는 서비스 운영을 위해 Google AdSense 등 제3자 광고를 게재할 수 있습니다. 이러한 광고 제공업체는 이용자의 관심사에 맞는 광고를 제공하기 위해 쿠키를 사용할 수 있으며, 이용자는 브라우저 설정에서 쿠키 사용을 거부하거나 Google 광고 설정 페이지에서 맞춤 광고를 해제할 수 있습니다.",
+    },
+    {
+      h: "3. 개인정보의 이용 목적",
+      p: "수집한 개인정보는 문의에 대한 답변 및 서비스 개선 목적으로만 이용하며, 이용자의 동의 없이 목적 외의 용도로 사용하지 않습니다.",
+    },
+    {
+      h: "4. 제3자 제공",
+      p: "본 사이트는 이용자의 개인정보를 원칙적으로 외부에 제공하지 않습니다. 다만 법령에 근거하거나 수사기관의 적법한 요청이 있는 경우에 한해 제공될 수 있습니다.",
+    },
+    {
+      h: "5. 개인정보의 보유 및 파기",
+      p: "문의 처리가 완료된 후에는 관련 법령에 따른 보존 기간이 없는 한 지체 없이 파기합니다.",
+    },
+    {
+      h: "6. 문의처",
+      p: `개인정보 처리에 관한 문의는 ${siteConfig.contactEmail}로 연락해 주시기 바랍니다.`,
+    },
+  ];
+
   return (
-    <div className="prose prose-zinc mx-auto max-w-3xl px-4 py-10">
-      <h1>개인정보 처리방침</h1>
-      <p>
-        {siteConfig.name}(이하 &lsquo;사이트&rsquo;)는 이용자의 개인정보를 중요하게 생각하며,
-        관련 법령을 준수하기 위해 노력합니다.
-      </p>
-
-      <h2>1. 수집하는 정보</h2>
-      <p>
-        본 사이트는 별도의 회원가입 없이 이용 가능하며, 문의를 위해 이메일을 보내주시는 경우
-        해당 이메일 주소와 문의 내용만 수집됩니다.
-      </p>
-
-      <h2>2. 쿠키 및 광고(Google AdSense)</h2>
-      <p>
-        본 사이트는 Google AdSense를 이용해 광고를 게재할 수 있습니다. Google을 포함한 광고
-        네트워크는 쿠키를 사용해 이용자의 이전 방문 기록을 기반으로 광고를 게재할 수 있으며,
-        이용자는{" "}
-        <a
-          href="https://adssettings.google.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Google 광고 설정
-        </a>
-        에서 맞춤 광고를 비활성화할 수 있습니다.
-      </p>
-      <p>
-        제3자 공급업체(Google 포함)는 쿠키를 사용하여 사용자가 본 사이트 및/또는 인터넷상의
-        다른 사이트를 방문한 기록을 바탕으로 광고를 게재합니다.
-      </p>
-
-      <h2>3. 개인정보의 이용 목적</h2>
-      <p>수집된 이메일은 문의 응대 목적으로만 사용되며, 별도 동의 없이 제3자에게 제공되지 않습니다.</p>
-
-      <h2>4. 문의</h2>
-      <p>
-        개인정보 처리방침에 대한 문의는{" "}
-        <a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a>로 연락해
-        주세요.
-      </p>
-
-      <h2>5. 시행일</h2>
-      <p>본 방침은 게시일부터 적용됩니다.</p>
-    </div>
+    <Container className="py-12">
+      <div className="mx-auto max-w-3xl">
+        <h1 className="font-serif text-4xl font-black text-primary">개인정보처리방침</h1>
+        <p className="mt-3 text-base text-muted-foreground">시행일: 2026년 8월 22일</p>
+        <div className="mt-8 space-y-8">
+          {sections.map((s) => (
+            <section key={s.h}>
+              <h2 className="font-serif text-xl font-bold text-primary">{s.h}</h2>
+              <p className="mt-2 text-lg leading-[1.9] text-foreground">{s.p}</p>
+            </section>
+          ))}
+        </div>
+      </div>
+    </Container>
   );
 }

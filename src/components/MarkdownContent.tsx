@@ -1,7 +1,7 @@
 export function MarkdownContent({ html }: { html: string }) {
   return (
     <div
-      className="prose prose-zinc max-w-none prose-headings:scroll-mt-24 prose-h2:mt-10 prose-h2:text-xl prose-h2:font-bold prose-p:leading-relaxed prose-img:rounded-lg"
+      className="prose max-w-none prose-headings:font-serif prose-headings:font-bold prose-headings:text-primary prose-headings:scroll-mt-24 prose-h2:mt-10 prose-h2:text-2xl prose-p:text-lg prose-p:leading-[1.9] prose-p:text-foreground prose-a:text-accent prose-strong:text-foreground prose-img:rounded-lg prose-li:text-lg prose-li:leading-[1.9]"
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );

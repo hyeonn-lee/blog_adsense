@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import type { Post, PostFrontmatter } from "@/types/post";
+import { categories, type CategoryMeta } from "@/config/site";
 
 export const POSTS_DIR = path.join(process.cwd(), "posts");
 
@@ -32,8 +33,10 @@ export function getPostBySlug(slug: string): Post | null {
     title: fm.title ?? slug,
     date: fm.date ?? "1970-01-01",
     description: fm.description ?? "",
-    category: fm.category ?? "미분류",
+    category: fm.category ?? categories[0].id,
     tags: fm.tags ?? [],
+    image: fm.image ?? undefined,
+    views: fm.views ?? 0,
     draft: fm.draft ?? false,
     content,
   };
@@ -42,34 +45,31 @@ export function getPostBySlug(slug: string): Post | null {
 const isProd = process.env.NODE_ENV === "production";
 
 export function getAllPosts(): Post[] {
-  const posts = getPostSlugs()
+  return getPostSlugs()
     .map((slug) => getPostBySlug(slug))
     .filter((post): post is Post => post !== null)
     .filter((post) => !(isProd && post.draft))
     .sort((a, b) => (a.date < b.date ? 1 : -1));
-
-  return posts;
 }
 
-export function getPostsByCategory(category: string): Post[] {
-  return getAllPosts().filter((post) => post.category === category);
+export function getPostsByCategory(categoryId: string): Post[] {
+  return getAllPosts().filter((post) => post.category === categoryId);
 }
 
-/** 글이 1개 이상 실제로 존재하는 카테고리만 반환 (빈 카테고리 노출 방지) */
-export function getNonEmptyCategories(): { category: string; count: number }[] {
-  const counts = new Map<string, number>();
-  for (const post of getAllPosts()) {
-    counts.set(post.category, (counts.get(post.category) ?? 0) + 1);
-  }
-  return Array.from(counts.entries())
-    .map(([category, count]) => ({ category, count }))
-    .sort((a, b) => b.count - a.count);
+export function getPopularPosts(limit = 5): Post[] {
+  return [...getAllPosts()]
+    .sort((a, b) => (b.views ?? 0) - (a.views ?? 0) || (a.date < b.date ? 1 : -1))
+    .slice(0, limit);
 }
 
-export function getAllTags(): string[] {
-  const tags = new Set<string>();
-  for (const post of getAllPosts()) {
-    post.tags.forEach((tag) => tags.add(tag));
-  }
-  return Array.from(tags).sort();
+export function getRelatedPosts(post: Post, limit = 3): Post[] {
+  return getAllPosts()
+    .filter((p) => p.category === post.category && p.slug !== post.slug)
+    .slice(0, limit);
+}
+
+/** 실제 글이 1개 이상 존재하는 카테고리만, 정해진 순서대로 반환 (빈 카테고리 노출 방지) */
+export function getActiveCategories(): CategoryMeta[] {
+  const posts = getAllPosts();
+  return categories.filter((c) => posts.some((p) => p.category === c.id));
 }

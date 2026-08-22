@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { Container } from "@/components/Container";
+import { ContactForm } from "@/components/ContactForm";
 import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
@@ -8,15 +10,17 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <div className="prose prose-zinc mx-auto max-w-3xl px-4 py-10">
-      <h1>문의하기</h1>
-      <p>
-        사이트 이용 중 궁금한 점이나 제안하고 싶은 내용이 있으시면 아래 이메일로 편하게
-        연락해 주세요. 확인 후 빠르게 답변드리겠습니다.
-      </p>
-      <p>
-        <a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a>
-      </p>
-    </div>
+    <Container className="py-12">
+      <div className="mx-auto max-w-2xl">
+        <h1 className="font-serif text-4xl font-black text-primary">문의하기</h1>
+        <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
+          궁금한 점이나 의견을 남겨 주세요. 아래 버튼을 누르면 입력하신 내용으로 이메일 작성 화면이
+          열립니다. 바로 메일을 보내셔도 됩니다:{" "}
+          <span className="font-medium text-accent">{siteConfig.contactEmail}</span>
+        </p>
+
+        <ContactForm />
+      </div>
+    </Container>
   );
 }

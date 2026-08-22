@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { markdownToHtml } from "@/lib/markdown";
 import { slugify } from "@/lib/slugify";
-import { siteConfig } from "@/config/site";
+import { categories } from "@/config/site";
 
 type PostSummary = {
   slug: string;
@@ -20,6 +20,8 @@ type FormState = {
   description: string;
   category: string;
   tags: string;
+  image: string;
+  views: string;
   draft: boolean;
   content: string;
 };
@@ -34,8 +36,10 @@ function emptyForm(): FormState {
     title: "",
     date: today(),
     description: "",
-    category: Object.keys(siteConfig.categoryLabels)[0] ?? "",
+    category: categories[0].id,
     tags: "",
+    image: "",
+    views: "",
     draft: true,
     content: "",
   };
@@ -50,10 +54,10 @@ export default function AdminPage() {
   const [status, setStatus] = useState<{ type: "ok" | "error"; message: string } | null>(null);
   const [saving, setSaving] = useState(false);
 
-  const categoryOptions = useMemo(() => {
-    const known = Object.keys(siteConfig.categoryLabels);
-    const fromPosts = posts.map((p) => p.category);
-    return Array.from(new Set([...known, ...fromPosts]));
+  const postsByCategory = useMemo(() => {
+    const map = new Map<string, number>();
+    posts.forEach((p) => map.set(p.category, (map.get(p.category) ?? 0) + 1));
+    return map;
   }, [posts]);
 
   async function loadPosts() {
@@ -64,6 +68,7 @@ export default function AdminPage() {
   }
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- 마운트 시 글 목록을 서버에서 불러오는 표준 패턴
     loadPosts();
   }, []);
 
@@ -99,6 +104,8 @@ export default function AdminPage() {
       description: post.description,
       category: post.category,
       tags: post.tags.join(", "),
+      image: post.image ?? "",
+      views: post.views ? String(post.views) : "",
       draft: post.draft,
       content: post.content,
     });
@@ -120,6 +127,7 @@ export default function AdminPage() {
       ...form,
       slug: form.slug || slugify(form.title),
       isNew,
+      views: form.views ? Number(form.views) : 0,
       tags: form.tags
         .split(",")
         .map((t) => t.trim())
@@ -178,7 +186,7 @@ export default function AdminPage() {
       <aside className="w-64 shrink-0">
         <button
           onClick={startNewPost}
-          className="mb-4 w-full rounded-lg bg-emerald-600 px-3 py-2 text-sm font-medium text-white hover:bg-emerald-700"
+          className="mb-4 w-full rounded-lg bg-accent px-3 py-2 text-sm font-medium text-accent-foreground hover:opacity-90"
         >
           + 새 글 작성
         </button>
@@ -187,29 +195,29 @@ export default function AdminPage() {
             <li key={p.slug}>
               <button
                 onClick={() => editPost(p.slug)}
-                className={`block w-full truncate rounded-md px-2 py-1.5 text-left text-sm hover:bg-zinc-100 ${
-                  form.slug === p.slug ? "bg-zinc-100 font-medium" : "text-zinc-700"
+                className={`block w-full truncate rounded-md px-2 py-1.5 text-left text-sm hover:bg-secondary ${
+                  form.slug === p.slug ? "bg-secondary font-medium" : "text-foreground"
                 }`}
               >
-                {p.draft && <span className="mr-1 text-amber-600">●</span>}
+                {p.draft && <span className="mr-1 text-point">●</span>}
                 {p.title}
               </button>
             </li>
           ))}
           {posts.length === 0 && (
-            <li className="px-2 py-1.5 text-sm text-zinc-400">작성된 글이 없습니다.</li>
+            <li className="px-2 py-1.5 text-sm text-muted-foreground">작성된 글이 없습니다.</li>
           )}
         </ul>
       </aside>
 
       {/* 편집 폼 */}
       <div className="flex-1">
-        <h1 className="mb-4 text-xl font-bold">{isNew ? "새 글 작성" : "글 수정"}</h1>
+        <h1 className="mb-4 text-xl font-bold text-primary">{isNew ? "새 글 작성" : "글 수정"}</h1>
 
         {status && (
           <div
             className={`mb-4 rounded-md px-3 py-2 text-sm ${
-              status.type === "ok" ? "bg-emerald-50 text-emerald-700" : "bg-red-50 text-red-700"
+              status.type === "ok" ? "bg-accent/10 text-accent" : "bg-point/10 text-point"
             }`}
           >
             {status.message}
@@ -219,17 +227,17 @@ export default function AdminPage() {
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           <div className="space-y-3">
             <div>
-              <label className="mb-1 block text-sm font-medium text-zinc-700">제목</label>
+              <label className="mb-1 block text-sm font-medium text-foreground">제목</label>
               <input
                 value={form.title}
                 onChange={(e) => handleTitleChange(e.target.value)}
-                className="w-full rounded-md border border-zinc-300 px-3 py-2 text-sm"
+                className="w-full rounded-md border border-border px-3 py-2 text-sm"
                 placeholder="글 제목"
               />
             </div>
 
             <div>
-              <label className="mb-1 block text-sm font-medium text-zinc-700">
+              <label className="mb-1 block text-sm font-medium text-foreground">
                 슬러그 (URL, 영문/숫자/하이픈)
               </label>
               <input
@@ -239,74 +247,91 @@ export default function AdminPage() {
                   setForm((prev) => ({ ...prev, slug: e.target.value }));
                 }}
                 disabled={!isNew}
-                className="w-full rounded-md border border-zinc-300 px-3 py-2 text-sm disabled:bg-zinc-100 disabled:text-zinc-500"
+                className="w-full rounded-md border border-border px-3 py-2 text-sm disabled:bg-muted disabled:text-muted-foreground"
                 placeholder="my-first-post"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="mb-1 block text-sm font-medium text-zinc-700">날짜</label>
+                <label className="mb-1 block text-sm font-medium text-foreground">날짜</label>
                 <input
                   type="date"
                   value={form.date}
                   onChange={(e) => setForm((prev) => ({ ...prev, date: e.target.value }))}
-                  className="w-full rounded-md border border-zinc-300 px-3 py-2 text-sm"
+                  className="w-full rounded-md border border-border px-3 py-2 text-sm"
                 />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium text-zinc-700">카테고리</label>
-                <input
-                  list="category-options"
+                <label className="mb-1 block text-sm font-medium text-foreground">카테고리</label>
+                <select
                   value={form.category}
                   onChange={(e) => setForm((prev) => ({ ...prev, category: e.target.value }))}
-                  className="w-full rounded-md border border-zinc-300 px-3 py-2 text-sm"
-                />
-                <datalist id="category-options">
-                  {categoryOptions.map((c) => (
-                    <option key={c} value={c} />
+                  className="w-full rounded-md border border-border px-3 py-2 text-sm"
+                >
+                  {categories.map((c) => (
+                    <option key={c.id} value={c.id}>
+                      {c.name} {postsByCategory.get(c.id) ? `(${postsByCategory.get(c.id)})` : ""}
+                    </option>
                   ))}
-                </datalist>
+                </select>
               </div>
             </div>
 
             <div>
-              <label className="mb-1 block text-sm font-medium text-zinc-700">설명(description)</label>
+              <label className="mb-1 block text-sm font-medium text-foreground">설명(description)</label>
               <textarea
                 value={form.description}
                 onChange={(e) => setForm((prev) => ({ ...prev, description: e.target.value }))}
                 rows={2}
-                className="w-full rounded-md border border-zinc-300 px-3 py-2 text-sm"
+                className="w-full rounded-md border border-border px-3 py-2 text-sm"
                 placeholder="검색 결과와 목록에 노출될 요약 (1~2문장)"
               />
             </div>
 
             <div>
-              <label className="mb-1 block text-sm font-medium text-zinc-700">태그 (쉼표로 구분)</label>
+              <label className="mb-1 block text-sm font-medium text-foreground">태그 (쉼표로 구분)</label>
               <input
                 value={form.tags}
                 onChange={(e) => setForm((prev) => ({ ...prev, tags: e.target.value }))}
-                className="w-full rounded-md border border-zinc-300 px-3 py-2 text-sm"
+                className="w-full rounded-md border border-border px-3 py-2 text-sm"
                 placeholder="관절염, 영양제, 낙상예방"
               />
             </div>
 
-            <label className="flex items-center gap-2 text-sm text-zinc-700">
+            <div>
+              <label className="mb-1 block text-sm font-medium text-foreground">
+                대표 이미지 URL (선택)
+              </label>
               <input
-                type="checkbox"
-                checked={form.draft}
-                onChange={(e) => setForm((prev) => ({ ...prev, draft: e.target.checked }))}
+                value={form.image}
+                onChange={(e) => setForm((prev) => ({ ...prev, image: e.target.value }))}
+                className="w-full rounded-md border border-border px-3 py-2 text-sm"
+                placeholder="https://... (비워두면 카테고리 이름이 표시된 자리표시자가 나옵니다)"
               />
-              초안(draft)으로 저장 — 체크 해제 시 배포된 사이트에 바로 노출됩니다.
-            </label>
+            </div>
+
+            <div className="flex items-center gap-4">
+              <label className="flex items-center gap-2 text-sm text-foreground">
+                <input
+                  type="checkbox"
+                  checked={form.draft}
+                  onChange={(e) => setForm((prev) => ({ ...prev, draft: e.target.checked }))}
+                />
+                초안(draft)으로 저장
+              </label>
+            </div>
+            <p className="-mt-2 text-xs text-muted-foreground">
+              체크 해제 시 배포된 사이트에 바로 노출됩니다.
+            </p>
 
             <div>
-              <label className="mb-1 block text-sm font-medium text-zinc-700">본문 (마크다운)</label>
+              <label className="mb-1 block text-sm font-medium text-foreground">본문 (마크다운)</label>
               <textarea
                 value={form.content}
                 onChange={(e) => setForm((prev) => ({ ...prev, content: e.target.value }))}
                 rows={18}
-                className="w-full rounded-md border border-zinc-300 px-3 py-2 font-mono text-sm"
+                className="w-full rounded-md border border-border px-3 py-2 font-mono text-sm"
                 placeholder={"## 소제목\n\n본문 내용을 입력하세요."}
               />
             </div>
@@ -315,14 +340,14 @@ export default function AdminPage() {
               <button
                 onClick={handleSave}
                 disabled={saving}
-                className="rounded-md bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700 disabled:opacity-50"
+                className="rounded-md bg-accent px-4 py-2 text-sm font-medium text-accent-foreground hover:opacity-90 disabled:opacity-50"
               >
                 {saving ? "저장 중..." : "저장하고 GitHub에 반영"}
               </button>
               {!isNew && (
                 <button
                   onClick={handleDelete}
-                  className="rounded-md border border-red-300 px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50"
+                  className="rounded-md border border-point/40 px-4 py-2 text-sm font-medium text-point hover:bg-point/10"
                 >
                   삭제
                 </button>
@@ -332,14 +357,16 @@ export default function AdminPage() {
 
           {/* 미리보기 */}
           <div>
-            <p className="mb-1 text-sm font-medium text-zinc-700">미리보기</p>
-            <div className="h-full rounded-md border border-zinc-200 p-4">
-              <div className="mb-3 border-b border-zinc-100 pb-3">
-                <h2 className="text-lg font-bold">{form.title || "제목 미리보기"}</h2>
-                <p className="text-xs text-zinc-500">{form.date}</p>
+            <p className="mb-1 text-sm font-medium text-foreground">미리보기</p>
+            <div className="h-full rounded-md border border-border p-4">
+              <div className="mb-3 border-b border-border pb-3">
+                <h2 className="font-serif text-lg font-bold text-primary">
+                  {form.title || "제목 미리보기"}
+                </h2>
+                <p className="text-xs text-muted-foreground">{form.date}</p>
               </div>
               <div
-                className="prose prose-zinc prose-sm max-w-none"
+                className="prose prose-sm max-w-none prose-headings:font-serif prose-headings:text-primary"
                 dangerouslySetInnerHTML={{ __html: preview }}
               />
             </div>

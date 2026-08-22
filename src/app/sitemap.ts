@@ -1,10 +1,10 @@
 import type { MetadataRoute } from "next";
-import { getAllPosts, getNonEmptyCategories } from "@/lib/posts";
+import { getAllPosts, getActiveCategories } from "@/lib/posts";
 import { siteConfig } from "@/config/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const posts = getAllPosts();
-  const categories = getNonEmptyCategories();
+  const activeCategories = getActiveCategories();
 
   const staticPages: MetadataRoute.Sitemap = [
     { url: siteConfig.url, changeFrequency: "weekly", priority: 1 },
@@ -15,8 +15,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteConfig.url}/terms`, changeFrequency: "yearly", priority: 0.3 },
   ];
 
-  const categoryPages: MetadataRoute.Sitemap = categories.map(({ category }) => ({
-    url: `${siteConfig.url}/category/${encodeURIComponent(category)}`,
+  const categoryPages: MetadataRoute.Sitemap = activeCategories.map((c) => ({
+    url: `${siteConfig.url}/category/${c.id}`,
     changeFrequency: "weekly",
     priority: 0.6,
   }));

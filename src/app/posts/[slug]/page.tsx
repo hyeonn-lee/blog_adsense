@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getAllPosts, getPostBySlug, getPostSlugs } from "@/lib/posts";
-import { markdownToHtml, estimateReadingMinutes } from "@/lib/markdown";
+import { getPostBySlug, getPostSlugs, getRelatedPosts } from "@/lib/posts";
+import { markdownToHtml, splitMarkdownSections, estimateReadingMinutes } from "@/lib/markdown";
+import { extractHeadings } from "@/lib/toc";
 import { MarkdownContent } from "@/components/MarkdownContent";
 import { AdSlot } from "@/components/AdSlot";
+import { ShareButtons } from "@/components/ShareButtons";
+import { ArticleCard, CategoryTag, Thumbnail, formatDate } from "@/components/cards";
+import { Container } from "@/components/Container";
 import { siteConfig } from "@/config/site";
 
 export function generateStaticParams() {
@@ -38,75 +42,96 @@ export default async function PostPage(props: PageProps<"/posts/[slug]">) {
     notFound();
   }
 
-  const html = await markdownToHtml(post.content);
+  const sections = splitMarkdownSections(post.content);
+  const sectionHtml = await Promise.all(sections.map((s) => markdownToHtml(s)));
+  const toc = extractHeadings(post.content);
   const readingMinutes = estimateReadingMinutes(post.content);
+  const related = getRelatedPosts(post);
+  const adIndex = Math.floor(sections.length / 2);
 
   return (
-    <article className="mx-auto max-w-3xl px-4 py-10">
-      <div className="mb-6">
-        <Link
-          href={`/category/${encodeURIComponent(post.category)}`}
-          className="text-xs font-medium text-emerald-700"
-        >
-          {siteConfig.categoryLabels[post.category] ?? post.category}
-        </Link>
-        <h1 className="mt-2 text-3xl font-bold text-zinc-900">{post.title}</h1>
-        <div className="mt-2 flex gap-3 text-sm text-zinc-500">
-          <time dateTime={post.date}>{post.date}</time>
-          <span>·</span>
-          <span>약 {readingMinutes}분 소요</span>
+    <Container className="py-10">
+      <div className="mx-auto max-w-3xl">
+        <CategoryTag post={post} />
+        <h1 className="mt-4 font-serif text-3xl leading-tight font-black text-primary sm:text-4xl">
+          {post.title}
+        </h1>
+        <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-1 border-b border-border pb-5 text-base text-muted-foreground">
+          <span className="font-medium text-foreground">{siteConfig.authorName}</span>
+          <span aria-hidden>·</span>
+          <span>{formatDate(post.date)}</span>
+          <span aria-hidden>·</span>
+          <span>{readingMinutes}분 읽기</span>
+        </div>
+
+        <div className="mt-6 aspect-video overflow-hidden rounded-lg bg-muted">
+          <Thumbnail post={post} />
+        </div>
+
+        <p className="mt-6 border-l-4 border-accent bg-secondary/50 py-4 pl-5 text-lg leading-relaxed font-medium text-foreground">
+          {post.description}
+        </p>
+
+        {toc.length > 1 && (
+          <nav className="mt-8 mb-8 rounded-lg border border-border bg-card p-5">
+            <div className="mb-2 text-base font-bold text-primary">목차</div>
+            <ol className="space-y-1">
+              {toc.map((item, i) => (
+                <li key={item.slug}>
+                  <a href={`#${item.slug}`} className="text-base text-accent hover:underline">
+                    {i + 1}. {item.text}
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+        )}
+
+        <div className="space-y-8">
+          {sectionHtml.map((html, i) => (
+            <div key={i}>
+              <MarkdownContent html={html} />
+              {i === adIndex && <AdSlot />}
+            </div>
+          ))}
+        </div>
+
+        {post.tags.length > 0 && (
+          <div className="mt-10 flex flex-wrap gap-2">
+            {post.tags.map((tag) => (
+              <span key={tag} className="rounded-full bg-secondary px-3 py-1 text-xs text-muted-foreground">
+                #{tag}
+              </span>
+            ))}
+          </div>
+        )}
+
+        <div className="mt-8 flex flex-wrap items-center gap-3 border-t border-border pt-6">
+          <ShareButtons title={post.title} />
         </div>
       </div>
 
-      <AdSlot className="mb-8" />
-
-      <MarkdownContent html={html} />
-
-      {post.tags.length > 0 && (
-        <div className="mt-10 flex flex-wrap gap-2">
-          {post.tags.map((tag) => (
-            <span
-              key={tag}
-              className="rounded-full bg-zinc-100 px-3 py-1 text-xs text-zinc-600"
-            >
-              #{tag}
-            </span>
-          ))}
+      {related.length > 0 && (
+        <div className="mx-auto mt-16 max-w-5xl">
+          <h2 className="mb-5 border-b-2 border-primary pb-2 font-serif text-2xl font-black text-primary">
+            함께 보면 좋은 글
+          </h2>
+          <div className="grid gap-6 sm:grid-cols-3">
+            {related.map((p) => (
+              <ArticleCard key={p.slug} post={p} />
+            ))}
+          </div>
         </div>
       )}
 
-      <AdSlot className="mt-10" />
-
-      <RelatedPosts currentSlug={post.slug} category={post.category} />
-    </article>
-  );
-}
-
-function RelatedPosts({
-  currentSlug,
-  category,
-}: {
-  currentSlug: string;
-  category: string;
-}) {
-  const related = getAllPosts()
-    .filter((p) => p.category === category && p.slug !== currentSlug)
-    .slice(0, 3);
-
-  if (related.length === 0) return null;
-
-  return (
-    <div className="mt-12 border-t border-zinc-200 pt-8">
-      <h2 className="mb-4 text-lg font-semibold text-zinc-900">관련 글</h2>
-      <ul className="space-y-3">
-        {related.map((p) => (
-          <li key={p.slug}>
-            <Link href={`/posts/${p.slug}`} className="text-emerald-700 hover:underline">
-              {p.title}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </div>
+      <div className="mx-auto mt-10 max-w-3xl">
+        <Link
+          href="/"
+          className="inline-block min-h-11 rounded-md border border-border px-5 py-2 text-base font-medium text-primary hover:bg-secondary"
+        >
+          ← 홈으로
+        </Link>
+      </div>
+    </Container>
   );
 }

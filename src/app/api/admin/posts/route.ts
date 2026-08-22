@@ -44,6 +44,8 @@ type SavePayload = {
   description: string;
   category: string;
   tags: string[];
+  image?: string;
+  views?: number;
   draft: boolean;
   content: string;
 };
@@ -53,7 +55,7 @@ export async function POST(request: NextRequest) {
   if (blocked) return blocked;
 
   const body = (await request.json()) as SavePayload;
-  const { slug, isNew, title, date, description, category, tags, draft, content } = body;
+  const { slug, isNew, title, date, description, category, tags, image, views, draft, content } = body;
 
   if (!slug || !isValidSlug(slug)) {
     return NextResponse.json(
@@ -81,6 +83,8 @@ export async function POST(request: NextRequest) {
     description,
     category,
     tags,
+    ...(image ? { image } : {}),
+    ...(views ? { views } : {}),
     draft,
   });
 
