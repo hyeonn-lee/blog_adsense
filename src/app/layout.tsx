@@ -33,16 +33,17 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="ko" className="h-full antialiased">
-      <head>
+      <body className="flex min-h-screen flex-col bg-background text-foreground">
         {siteConfig.adsenseClientId && (
-          <script
+          <Script
+            id="adsbygoogle-init"
+            strategy="beforeInteractive"
             async
             src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${siteConfig.adsenseClientId}`}
             crossOrigin="anonymous"
           />
         )}
-      </head>
-      <body className="flex min-h-screen flex-col bg-background text-foreground">
+
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
