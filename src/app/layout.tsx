@@ -36,9 +36,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="ko" className="h-full antialiased">
       <body className="flex min-h-screen flex-col bg-background text-foreground">
         {siteConfig.adsenseClientId && (
-          <Script
-            id="adsbygoogle-init"
-            strategy="beforeInteractive"
+          // next/script는 <script> 태그를 자바스크립트로 뒤늦게 주입해 애드센스의
+          // "코드 스니펫" 확인 크롤러(정적 HTML만 읽음)가 인식하지 못한다.
+          // 순수 <script> 태그로 렌더링해야 초기 HTML에 그대로 남는다.
+          <script
             async
             src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${siteConfig.adsenseClientId}`}
             crossOrigin="anonymous"
