@@ -52,7 +52,7 @@ export const siteConfig = {
   domain: "seniorhealth.homes",
   description: "시니어와 가족을 위한 건강·생활 정보를 다루는 블로그입니다.",
   authorName: process.env.NEXT_PUBLIC_AUTHOR_NAME || "편집팀",
-  contactEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "contact@seniorhealth.homes",
+  contactEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "sj96023@gmail.com",
   gaId: process.env.NEXT_PUBLIC_GA_ID || "",
   adsenseClientId: process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || "",
   categories,
