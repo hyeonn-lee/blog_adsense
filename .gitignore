@@ -40,6 +40,9 @@ yarn-error.log*
 # Figma Make 디자인 원본 (참고용, 실제 앱 빌드 대상 아님)
 /figma_make_design_senior
 
+# 기존 블로그(Tistory) 원본 백업 (posts/ 로 이미 변환 완료, 원본은 로컬 보관용)
+/article
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
