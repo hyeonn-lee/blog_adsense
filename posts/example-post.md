@@ -2,7 +2,7 @@
 title: "예시 글 - 이 파일을 참고해서 새 글을 작성하세요"
 date: "2026-08-22"
 description: "posts 폴더에 이런 형식의 마크다운 파일을 추가하면 새 글이 자동으로 발행됩니다."
-category: "건강정보"
+category: "health"
 tags: ["예시", "가이드"]
 draft: true
 ---
