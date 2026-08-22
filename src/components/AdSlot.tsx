@@ -26,7 +26,10 @@ export function AdSlot({ slot, label = "광고", className }: AdSlotProps) {
   }
 
   return (
-    <div className={`my-8 ${className ?? ""}`}>
+    <div className={`my-8 ${className ?? ""}`} role="complementary" aria-label="광고 영역">
+      <div className="mb-1 text-center text-xs font-medium tracking-widest text-muted-foreground uppercase">
+        {label}
+      </div>
       <ins
         className="adsbygoogle block"
         style={{ display: "block" }}
