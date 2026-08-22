@@ -22,7 +22,7 @@ draft: false
 
 ## 1\. 건망증과 치매, 근본적으로 뭐가 다른가
 
-![](/images/posts/repeated-questions-dementia-signs/img_1.png)
+![건망증과 치매의 차이를 설명하는 이미지](/images/posts/repeated-questions-dementia-signs/img_1.png)
 
 건망증은 정보가 뇌에 저장은 되어 있지만, 그것을 끄집어내는 '인출' 과정에서 일시적으로 문제가 생긴 상태입니다. 반면 치매는 정보를 저장하는 단계 자체에서 장애가 생겨, 애초에 기억이 만들어지지 않거나 뇌세포 손상으로 소실되는 것입니다.
 
@@ -40,11 +40,11 @@ draft: false
 
 특히 "며칠 전 들었던 이야기를 완전히 잊고 똑같은 질문을 반복한다", "늘 다니던 길인데도 헤맨다", "간단한 거스름돈 계산을 자주 틀린다"는 신호가 반복된다면 단순 건망증보다는 치매 초기 증상을 의심해볼 필요가 있습니다.
 
-![](/images/posts/repeated-questions-dementia-signs/img_2.png)
+![치매 초기 의심 신호를 보여주는 이미지](/images/posts/repeated-questions-dementia-signs/img_2.png)
 
 ## 3\. 실생활 상황별 비교표
 
-![](/images/posts/repeated-questions-dementia-signs/img_3.png)
+![일상 속 건망증과 치매 비교 이미지](/images/posts/repeated-questions-dementia-signs/img_3.png)
 
 -   **요리할 때**: 건망증은 준비한 재료를 깜빡하고 그냥 조리를 시작하지만, 치매는 요리 순서 자체를 기억 못하거나 자신이 요리를 준비했다는 사실조차 잊습니다.
 -   **약속**: 건망증은 "몇 시에 만나기로 했더라?" 하고 다시 물어보지만, 치매는 약속을 했다는 사실 자체를 전혀 기억하지 못합니다.

@@ -1,7 +1,7 @@
 ---
 title: "치매 초기 증상 체크리스트ㅣ단순 건망증과 구분하는 법 ★"
 date: "2026-08-15"
-description: "치매 초기 증상 체크리스트ㅣ단순 건망증과 구분하는 법"
+description: "정상적인 노화성 건망증과 치매 초기 증상의 차이를 비교표와 자가 체크리스트로 정리하고, 미국 알츠하이머협회가 제시한 10대 경고 신호와 병원을 찾아야 하는 시점, 전국 치매안심센터의 무료 선별검사 이용법까지 함께 안내합니다."
 category: "health"
 tags: ["건망증","치매초기증상","경도인지장애","치매자가진단","치매전조증상","치매체크리스트","건망증치매구분","노인성건망증"]
 image: "/images/posts/dementia-early-symptoms-checklist/Gemini_Generated_Image_jh5przjh5przjh5p.png"
@@ -37,7 +37,7 @@ draft: false
   
 **건망증 vs 치매 초기 증상 비교표**
 
-![](/images/posts/dementia-early-symptoms-checklist/img.jpg)
+![건망증과 치매 초기 증상 비교표](/images/posts/dementia-early-symptoms-checklist/img.jpg)
 
 ## **치매를 의심해야 하는 대표 증상 10가지**
 
@@ -80,3 +80,7 @@ draft: false
   
 
 ## **FAQ**
+
+## 마무리
+
+건망증은 힌트를 주면 기억이 돌아오고 일상에 큰 지장이 없지만, 치매 초기 증상은 힌트를 줘도 기억하지 못하고 일상생활이 점점 어려워진다는 점이 가장 큰 차이입니다. 최근 정보를 반복해서 잊거나 익숙한 일 처리가 힘들어지는 등 의심 증상이 2개 이상 겹친다면, 자가진단에만 머물지 말고 가까운 치매안심센터나 신경과에서 정확한 검사를 받아보시길 권해드립니다.

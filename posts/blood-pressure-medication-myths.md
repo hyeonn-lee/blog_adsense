@@ -22,7 +22,7 @@ draft: false
 
 ## 1\. 혈압약, 정말 평생 먹어야 할까
 
-![](/images/posts/blood-pressure-medication-myths/img_1.png)
+![혈압약 복용을 고민하는 모습](/images/posts/blood-pressure-medication-myths/img_1.png)
 
 결론부터 말씀드리면, **"한 번 먹으면 무조건 평생"이라는 말은 정확한 표현이 아닙니다.** 의료진이 목표로 하는 것은 약을 계속 먹이는 것 자체가 아니라 혈압을 안정적으로 조절하는 것입니다.
 
@@ -32,7 +32,7 @@ draft: false
 
 ## 2\. 혈압약을 줄이거나 끊을 수 있는 경우
 
-![](/images/posts/blood-pressure-medication-myths/img_2.png)
+![생활습관 개선으로 혈압을 관리하는 모습](/images/posts/blood-pressure-medication-myths/img_2.png)
 
 모든 환자가 평생 같은 용량을 유지해야 하는 것은 아닙니다. 아래와 같은 조건이 충족되면 의사와 상의해 감량이나 중단을 고려해볼 수 있습니다.
 
@@ -46,7 +46,7 @@ draft: false
 
 ## 3\. 반드시 계속 복용해야 하는 경우
 
-![](/images/posts/blood-pressure-medication-myths/img_3.png)
+![혈압약을 꾸준히 복용하는 모습](/images/posts/blood-pressure-medication-myths/img_3.png)
 
 반대로 아래에 해당한다면 약물 치료를 꾸준히 유지하는 것이 합병증 예방에 훨씬 중요합니다.
 
@@ -59,7 +59,7 @@ draft: false
 
 ## 4\. 갑자기 끊으면 왜 위험한가
 
-![](/images/posts/blood-pressure-medication-myths/img_4.png)
+![혈압약을 자가 판단으로 중단하는 모습](/images/posts/blood-pressure-medication-myths/img_4.png)
 
 혈압 수치가 좋아졌다고 해서 스스로 판단해 약을 중단하는 것은 가장 위험한 행동으로 꼽힙니다. 수치가 좋아진 것이 생활습관 개선 덕분인지, 아니면 약효 덕분인지 구분하기 어렵기 때문입니다.
 

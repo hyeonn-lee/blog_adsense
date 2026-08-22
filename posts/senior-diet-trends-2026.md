@@ -26,7 +26,7 @@ draft: false
 
 ## 2\. 저속노화 식단이란
 
-![](/images/posts/senior-diet-trends-2026/img_1.png)
+![저속노화 식단 예시 상차림](/images/posts/senior-diet-trends-2026/img_1.png)
 
 저속노화 식단은 단순당류·정제곡물·붉은 육류 대신 통곡물, 콩류, 녹색채소, 견과류 위주로 먹는 식습관입니다. 서울아산병원 노년내과 정희원 교수가 대중화시킨 개념으로, 단순당과 정제곡물이 혈당을 급격히 올려 노화를 가속하는 반면, 식단만 바꿔도 노화 속도를 늦출 수 있다는 것이 핵심 논리입니다.
 
@@ -46,7 +46,7 @@ draft: false
 
 ## 3\. 식단형 케어푸드란
 
-![](/images/posts/senior-diet-trends-2026/img_2.png)
+![식단형 케어푸드 예시 사진](/images/posts/senior-diet-trends-2026/img_2.png)
 
 과거 케어푸드(환자식·요양식)는 대부분 죽이나 영양 보충용 액상식 형태였습니다. 하지만 최근에는 시장의 중심이 일반 식사와 비슷한 형태를 유지하는 '식단형 제품'으로 옮겨가고 있습니다.
 
@@ -56,7 +56,7 @@ draft: false
 
 ## 4\. 구독형 배달식단과 기능성 시니어 스낵
 
-![](/images/posts/senior-diet-trends-2026/img_3.png)
+![구독형 배달식단과 시니어 스낵 사진](/images/posts/senior-diet-trends-2026/img_3.png)
 
 시설이 아닌 집에서 노후를 보내는 흐름이 커지면서 등장한 것이 **구독형 배달 식단**입니다. 저속노화 식단을 반영해 통곡물밥, 채소 반찬, 오메가-3가 포함된 단백질 반찬을 정기적으로 집까지 배송해주는 서비스가 늘고 있습니다.
 
@@ -64,7 +64,7 @@ draft: false
 
 ## 5\. 우리 집에서 바로 시작하는 법
 
-![](/images/posts/senior-diet-trends-2026/img_4.png)
+![가정에서 실천하는 식단 관리 모습](/images/posts/senior-diet-trends-2026/img_4.png)
 
   
   

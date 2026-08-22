@@ -44,7 +44,7 @@ draft: false
 
 ## 2\. 골밀도 검사, 몇 살부터 받을 수 있나요
 
-![](/images/posts/health-checkup-extra-items-50s-60s/img_1.png)
+![골밀도 검사 장면을 보여주는 사진](/images/posts/health-checkup-extra-items-50s-60s/img_1.png)
 
 국민건강보험 일반건강검진 항목으로는 **만 54세, 66세 여성**에게 각 1회씩 무료로 제공됩니다. 여성이 대상인 이유는 폐경 이후 골밀도가 급격히 감소하면서 골다공증 유병률이 남성보다 약 4배 높기 때문입니다.
 
@@ -54,7 +54,7 @@ draft: false
 
 ## 3\. 대장내시경 주기는 몇 년이 적당한가요
 
-![](/images/posts/health-checkup-extra-items-50s-60s/img_2.png)
+![대장내시경 검사 장면을 보여주는 사진](/images/posts/health-checkup-extra-items-50s-60s/img_2.png)
 
 국가건강검진에서는 \*\*만 50세부터 분변잠혈검사(대변에서 혈액 반응 확인)\*\*가 대장암 검진의 기본 항목으로 제공됩니다. 다만 분변잠혈검사는 대장내시경에 비해 정확도가 낮다는 한계가 있어, 정확한 상태 확인을 원한다면 대장내시경을 별도로 받는 것이 좋습니다.
 
@@ -70,7 +70,7 @@ draft: false
 
 \[이
 
-![](/images/posts/health-checkup-extra-items-50s-60s/img_3.png)
+![국가건강검진과 종합검진 항목 비교 이미지](/images/posts/health-checkup-extra-items-50s-60s/img_3.png)
 
 미지: 국가검진 결과지와 종합검진 결과지를 나란히 비교한 이미지 / alt: "국가건강검진과 종합검진 항목 비교"\]
 

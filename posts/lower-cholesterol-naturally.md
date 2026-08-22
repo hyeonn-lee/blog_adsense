@@ -35,7 +35,7 @@ draft: false
 
 ## 2\. 식단으로 낮추는 법 6가지
 
-![](/images/posts/lower-cholesterol-naturally/img_1.png)
+![콜레스테롤 낮추는 식단 예시 상차림](/images/posts/lower-cholesterol-naturally/img_1.png)
 
 전문가들이 공통으로 강조하는 식단 원칙 6가지를 정리했습니다.
 
@@ -52,7 +52,7 @@ draft: false
 
 ## 3\. 생활습관으로 낮추는 법 4가지
 
-![](/images/posts/lower-cholesterol-naturally/img_2.png)
+![운동 등 건강한 생활습관 모습](/images/posts/lower-cholesterol-naturally/img_2.png)
 
 식단 못지않게 중요한 것이 생활습관입니다.
 
@@ -69,7 +69,7 @@ draft: false
 
 ## 4\. 2026년 새로워진 콜레스테롤 관리 기준
 
-![](/images/posts/lower-cholesterol-naturally/img_3.png)
+![콜레스테롤 관리 가이드라인 안내 이미지](/images/posts/lower-cholesterol-naturally/img_3.png)
 
 2026년 3월, 미국심장학회(ACC)와 미국심장협회(AHA)는8년 만에 콜레스테롤 관리 가이드라인을 전면 개정했으며, 수치를 더 낮게, 더 일찍 관리하라는 것이 핵심 내용<입니다. 주요 변화는 다음과 같습니다.
 
