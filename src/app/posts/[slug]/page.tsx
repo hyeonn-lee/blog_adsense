@@ -2,7 +2,12 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getPostBySlug, getPostSlugs, getRelatedPosts } from "@/lib/posts";
-import { markdownToHtml, splitMarkdownSections, estimateReadingMinutes } from "@/lib/markdown";
+import {
+  markdownToHtml,
+  splitMarkdownSections,
+  splitSourcesSection,
+  estimateReadingMinutes,
+} from "@/lib/markdown";
 import { extractHeadings } from "@/lib/toc";
 import { MarkdownContent } from "@/components/MarkdownContent";
 import { AdSlot } from "@/components/AdSlot";
@@ -42,9 +47,11 @@ export default async function PostPage(props: PageProps<"/posts/[slug]">) {
     notFound();
   }
 
-  const sections = splitMarkdownSections(post.content);
+  const { main: postBody, sources: sourcesMarkdown } = splitSourcesSection(post.content);
+  const sections = splitMarkdownSections(postBody);
   const sectionHtml = await Promise.all(sections.map((s) => markdownToHtml(s)));
-  const toc = extractHeadings(post.content);
+  const sourcesHtml = sourcesMarkdown ? await markdownToHtml(sourcesMarkdown) : null;
+  const toc = extractHeadings(postBody);
   const readingMinutes = estimateReadingMinutes(post.content);
   const related = getRelatedPosts(post);
   const adIndex = Math.floor(sections.length / 2);
@@ -103,6 +110,15 @@ export default async function PostPage(props: PageProps<"/posts/[slug]">) {
                 #{tag}
               </span>
             ))}
+          </div>
+        )}
+
+        {sourcesHtml && (
+          <div className="mt-8 border-t border-border pt-4">
+            <MarkdownContent
+              html={sourcesHtml}
+              className="prose prose-sm max-w-none prose-headings:text-xs prose-headings:font-semibold prose-headings:text-muted-foreground prose-headings:mb-1 prose-p:text-xs prose-p:text-muted-foreground prose-li:text-xs prose-li:text-muted-foreground prose-li:leading-relaxed prose-a:text-muted-foreground prose-a:underline prose-a:underline-offset-2 prose-strong:text-xs prose-strong:text-muted-foreground"
+            />
           </div>
         )}
 

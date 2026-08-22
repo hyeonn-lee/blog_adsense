@@ -38,6 +38,17 @@ export function splitMarkdownSections(markdown: string): string[] {
   return sections.filter((s) => s.length > 0);
 }
 
+/** 본문 끝의 "Sources:" / "## Sources:" / "**참고 자료**" 구간을 본문과 분리합니다 (덜 강조된 스타일로 별도 렌더링하기 위함). */
+export function splitSourcesSection(markdown: string): { main: string; sources: string | null } {
+  const match = /^\s*#{0,2}\s*\*{0,2}(?:Sources:|참고\s*자료)\*{0,2}\s*$/im.exec(markdown);
+  if (!match) return { main: markdown, sources: null };
+
+  return {
+    main: markdown.slice(0, match.index).trimEnd(),
+    sources: markdown.slice(match.index).trim(),
+  };
+}
+
 export function estimateReadingMinutes(markdown: string): number {
   const words = markdown.trim().split(/\s+/).length;
   const charCount = markdown.replace(/\s+/g, "").length;
